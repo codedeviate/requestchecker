@@ -53,6 +53,17 @@ if(options.help || !options.src) {
                     console.log(index + ": ", val);
                 });
             }
+        }).catch((error) => {
+            console.log("Sorry but we failed");
+            if(error.code == "ENOTFOUND") {
+                console.log("The host could not be found");
+            } else if(error.code == "ECONNRESET") {
+                console.log("The connection was reset");
+            } else if(error.name == "AbortError") {
+                console.log("The connection was aborted");
+            } else {
+                console.log(error);
+            }
         });
     });
 }
