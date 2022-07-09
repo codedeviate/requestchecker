@@ -1,11 +1,29 @@
 'use strict';
 
 const fetch = require('node-fetch');
+const commandLineArgs = require('command-line-args');
 
-const timeout = 30;
+const optionDefinitions = [
+  { name: 'verbose', alias: 'v', type: Boolean },
+  { name: 'src', type: String, multiple: true, defaultOption: true },
+  { name: 'timeout', alias: 't', type: Number, defaultValue: 30 },
+  { name: 'help', alias: 'h', type: Boolean }
+];
 
-process.argv.forEach(function (val, index, array) {
-    if(index > 1) {
+const options = commandLineArgs(optionDefinitions);
+
+if(options.help || !options.src) {
+    console.log("Request Checker");
+    console.log("  Perform a request to a given url and get the response status.")
+    console.log("  Usage: node index.js [-h] [-v] <url>");
+    console.log("    -h Show this help");
+    console.log("    -v Verbose output. Will show the headers sent back from the server");
+    console.log("    <url> the url to examine");
+    console.log("  Output will contain the status grouped by major class (2xx, 3xx, 4xx or 5xx).");
+    console.log("  If the class is 2xx and there is a Content-Location header then this will be shown.");
+    console.log("  If verbose output is selected then the headers will be listed as well.");
+} else if(options.src) {
+    options.src.forEach(function (val, index, array) {
         fetch(val, {redirect: 'manual'}).then((response) => {
             let hdrs = [];
             response.headers.forEach((val, index, array) =>  {
@@ -29,11 +47,13 @@ process.argv.forEach(function (val, index, array) {
                 console.log("We got a 5xx response (" + response.status + ")");
             }
 
-            console.log("\nHeaders\n########################################");
-            response.headers.forEach((val, index, array) =>  {
-                console.log(index + ": ", val);
-            });
+            if(options.verbose) {
+                console.log("\nHeaders\n########################################");
+                response.headers.forEach((val, index, array) =>  {
+                    console.log(index + ": ", val);
+                });
+            }
         });
-    }
-});
+    });
+}
 
