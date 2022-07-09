@@ -2,6 +2,8 @@
 Perform a request to a given url and get the response status.
 
 ## "Installation"
+*Please observe that this utility is written for usage in [Node.js](https://nodejs.org/)*
+
 ```bash
 git clone https://github.com/codedeviate/requestchecker
 cd requestchecker
