@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/codedeviate/requestchecker#readme",
   "dependencies": {
+    "command-line-args": "^5.2.1",
     "node-fetch": "2.1.1"
   }
 }
