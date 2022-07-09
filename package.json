@@ -4,13 +4,14 @@
   "description": "A tool to check remote url's for status and redirects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "request": "node ./index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codedeviate/requestchecker.git"
   },
   "author": "Thomas Björk",
+  "email": "codedv8@gmail.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/codedeviate/requestchecker/issues"
